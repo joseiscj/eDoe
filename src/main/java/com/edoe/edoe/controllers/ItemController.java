@@ -12,39 +12,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.edoe.edoe.dto.ItemDTO;
 import com.edoe.edoe.models.Item;
-import com.edoe.edoe.repository.ItemRepository;
+import com.edoe.edoe.services.ItemService;
 
 @RestController
 @RequestMapping(value="/")
 public class ItemController {
 	
 	@Autowired
-	ItemRepository itemRepository;
+	ItemService itemService;	
 	
 	@GetMapping("/itens")
 	public List<Item> getItens() {
-		return itemRepository.findAll();
+		return itemService.findAll();
 	}
 	
 	@GetMapping("/item/{id}")
 	public Item getItem(@PathVariable(value="id") long id) {
-		return itemRepository.findById(id);
+		return itemService.findById(id);
 	}
 	
 	@PostMapping("/item")
-	public Item create(@RequestBody Item item) {
-		return itemRepository.save(item);
+	public Item create(@RequestBody ItemDTO itemDTO) {
+		return itemService.create(itemDTO);
 	}
 	
 	@DeleteMapping("/item")
-	public void delete(@RequestBody Item item) {
-		itemRepository.delete(item);
+	public void delete(@RequestBody ItemDTO itemDTO) {
+		itemService.delete(itemDTO);
 	}
 	
 	@PutMapping("/item")
-	public Item put(@RequestBody Item item) {
-		return itemRepository.save(item);
+	public Item put(@RequestBody ItemDTO itemDTO) {
+		return itemService.update(itemDTO);
 	}
 
 }

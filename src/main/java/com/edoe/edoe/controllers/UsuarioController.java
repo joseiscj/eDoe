@@ -46,7 +46,7 @@ public class UsuarioController {
 	//pequisar usuarios pelo nome completo
 	@GetMapping("/usuario/{nome}")
 	public Usuario getUsuarioPorNome(@PathVariable(value="nome") String nome) {
-		return usuarioRepository.findByName(nome);
+		return usuarioRepository.findByNome(nome);
 	}
 	
 	@PostMapping("/usuario")

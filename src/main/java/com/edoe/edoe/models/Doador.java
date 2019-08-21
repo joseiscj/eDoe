@@ -1,10 +1,11 @@
 package com.edoe.edoe.models;
 
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("D")
 public class Doador extends Usuario {	
-	
+		
 }

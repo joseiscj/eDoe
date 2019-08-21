@@ -15,6 +15,14 @@ public class Descricao {
 	
 	@Column(unique = true, nullable = false)
 	private String descricao;
+	
+	public Descricao() {
+		
+	}
+	
+	public Descricao(String descricao) {
+		this.descricao = descricao;
+	}
 
 	public long getId() {
 		return id;

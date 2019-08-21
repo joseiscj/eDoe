@@ -33,6 +33,14 @@ public class Usuario {
 	@Column(nullable = false)
 	private String identificacao;
 	
+	public Usuario() {
+		
+	}
+	
+	public Usuario(long id) {
+		this.id = id;
+	}
+	
 // GETTERS AND SETTERS
 	
 	public String getIdentificacao() {

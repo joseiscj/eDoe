@@ -7,6 +7,6 @@ import com.edoe.edoe.models.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	Usuario findById(long id);
 	Usuario findByIdentificacao(String identificacao);
-	Usuario findByName(String nome);
+	Usuario findByNome(String nome);
 
 }
