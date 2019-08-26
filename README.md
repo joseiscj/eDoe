@@ -1,3 +1,5 @@
+![Captura+de+tela+de+2019-08-26+16-27-24_upscaled_image_x4](https://user-images.githubusercontent.com/20418546/63717895-acca6f00-c81f-11e9-8ca9-52d5a4b4eb79.jpg)
+
 # eDoe
 # Descrição
   Muitas pessoas tem interesse em fazer doações, mas as vezes não tem o tempo necessário para encontrar onde doar ou como doar. Como sabemos, vivemos em um país em que a desigualdade social ainda existe e por isso há várias pessoas necessitadas, às vezes grupos de pessoas com um problema em comum. 
