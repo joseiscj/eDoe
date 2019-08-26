@@ -1,18 +1,17 @@
 package com.edoe.edoe.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@DiscriminatorColumn(name = "tipo", length = 1, discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("U")
-public class Usuario {
+
+public class Usuario implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,9 +32,25 @@ public class Usuario {
 	@Column(nullable = false)
 	private String identificacao;
 	
-	public Usuario() {
-		
+	@Column(nullable = false)
+	private Tipo tipo;
+	
+	//CONSTRUCTOR
+	
+	public Usuario(long id, String nome, String email, String celular, Classe classe, String identificacao, Tipo tipo) {
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.celular = celular;
+		this.classe = classe;
+		this.identificacao = identificacao;
+		this.tipo = tipo;
 	}
+
+	public Usuario() {
+
+	}
+
 	
 	public Usuario(long id) {
 		this.id = id;
@@ -86,6 +101,23 @@ public class Usuario {
 	public Classe getClasse() {
 		return classe;
 	}
-		
+	
+	public void setClasse(Classe classe) {
+		this.classe = classe;
+	}
+	
+	public Tipo getTipo() {
+		return tipo;
+	}
 
+	public void setTipo(Tipo tipo) {
+		this.tipo = tipo;
+	}
+
+	@Override
+	public String toString() {
+		return this.nome + "/" + this.identificacao + ", " + this.email + ", " + this.celular + ", status:" +
+	"{" + this.tipo + "}";
+	}
+	
 }

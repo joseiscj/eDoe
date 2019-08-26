@@ -16,49 +16,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.edoe.edoe.models.Doador;
+import com.edoe.edoe.dto.UsuarioDTO;
 import com.edoe.edoe.models.Usuario;
-import com.edoe.edoe.repository.UsuarioRepository;
+import com.edoe.edoe.services.UsuarioService;
 
 @RestController
 @RequestMapping(value="/usuario")
 public class UsuarioController {
 	
 	@Autowired
-	UsuarioRepository usuarioRepository;
+	UsuarioService usuarioService;
 	
 	@GetMapping("/")
 	public List<Usuario> getUsuarios() {
-		return usuarioRepository.findAll();
+		return usuarioService.findAll();
 	}
 	
 	@GetMapping("/{id}")
 	public Usuario getUsuario(@PathVariable(value="id") long id) {
-		return usuarioRepository.findById(id);
+		return usuarioService.findById(id);
 	}
 	
 	//pequisar usuarios pelo documento de identificacao
 	@GetMapping("/{identificacao}")
 	public Usuario getUsuario(@PathVariable(value="identificacao") String identificacao) {
-		return usuarioRepository.findByIdentificacao(identificacao);
+		return usuarioService.findByIdentificacao(identificacao);
 	}
 	
 	//pequisar usuarios pelo nome completo
 	@GetMapping("/{nome}")
 	public Usuario getUsuarioPorNome(@PathVariable(value="nome") String nome) {
-		return usuarioRepository.findByNome(nome);
+		return usuarioService.findByNome(nome);
 	}
 	
-	@PostMapping("/")
-	public Doador cadastrarDoadores(@RequestBody Doador usuario) {
-		return usuarioRepository.save(usuario);
+	@PostMapping("/usuario")
+	public Usuario cadastrarDoadores(@RequestBody UsuarioDTO usuarioDTO) {
+		return usuarioService.createDoador(usuarioDTO);
 	}
 	
 	//remover usuários do sistema localizados pelo seu documento de identificação
 	@DeleteMapping("/")
 	public void delete(String identificacao) {
-		Usuario usuario = usuarioRepository.findByIdentificacao(identificacao);
-		usuarioRepository.delete(usuario);
+		usuarioService.delete(identificacao);
 	}
 	
 	/*
@@ -75,10 +74,6 @@ public class UsuarioController {
 	//atualizar nome, email e celular de usuário pelo documento de identificacao
 	@PutMapping("/usuario")
 	public Usuario put(String identificacao, String nome, String email, String celular) {
-		Usuario usuario = usuarioRepository.findByIdentificacao(identificacao);
-		usuario.setNome(nome);
-		usuario.setEmail(email);
-		usuario.setCelular(celular);
-		return usuarioRepository.save(usuario);
+		return usuarioService.update(identificacao, nome, email, celular);
 	}
 }
