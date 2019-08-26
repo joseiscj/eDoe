@@ -1,1 +1,17 @@
 # eDoe
+# Descrição
+  Muitas pessoas tem interesse em fazer doações, mas as vezes não tem o tempo necessário para encontrar onde doar ou como doar. Como sabemos, vivemos em um país em que a desigualdade social ainda existe e por isso há várias pessoas necessitadas, às vezes grupos de pessoas com um problema em comum. 
+  
+  No eDoe.com usuários de toda a região envolvida podem cadastrar itens a serem doados. Usuários também podem cadastrar itens necessários e o sistema deve saber casar doações com necessidades para facilitar a doação. Uma vez fechada uma doação, o sistema ajuda a organizar o encontro de doador/receptor.
+  
+  [Descrição completa do projeto](https://docs.google.com/document/d/e/2PACX-1vST2TI5lDbtMlv8rhFYJkYnrfgqzyWDv6DDvvAajz3_KK4tAs_UnAbYdI6oeMQA6jEHo5HwUAatHmd8/pub)
+  
+  # Pré requisitos
+   O Sistema Operacional usado foi o *Linux* e as tecnologias utilizadas foram a LP *Java*, *Spring Boot* e a API *Postman* para testar o serviço RESTful por meio do envio de requisições HTTP e da análise do seu retorno. 
+   
+   Utilizamos o *Spring JPA* para integrarmos os objetos Java em um banco de dados, possibilitando a persistência dos mesmos. A IDE utilizada foi o *Eclipse IDE*.
+   
+# Autoria e contribuições
+  Os desenvolvedores do projeto são **José Ivan Silva da Cruz Júnior** (joseiscj) e **Marcos César** (Marcoozvn).
+  
+ 
