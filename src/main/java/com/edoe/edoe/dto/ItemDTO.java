@@ -1,6 +1,6 @@
 package com.edoe.edoe.dto;
 
-import com.edoe.edoe.models.Descricao;
+import com.edoe.edoe.models.Description;
 import com.edoe.edoe.models.Item;
 import com.edoe.edoe.models.Status;
 import com.edoe.edoe.models.Usuario;
@@ -8,25 +8,25 @@ import com.edoe.edoe.models.Usuario;
 public class ItemDTO {
 	private long id;
 	
-	private Descricao descricao;
+	private Description description;
 	
-	private int quantidade;
+	private int quantity;
 	
 	private String tags;
 	
-	private Usuario usuario;
+	private Usuario user;
 	
-	private long usuarioId;
+	private long userId;
 	
 	private Status status;
 	
-	public ItemDTO(long id, Descricao descricao, int quantidade, String tags, long usuarioId, Status status) {
+	public ItemDTO(long id, Description descricao, int quantidade, String tags, long usuarioId, Status status) {
 		this.id = id;
-		this.descricao = descricao;
+		this.description = descricao;
 		this.tags = tags;
 		this.status = status;
-		this.usuario = new Usuario(usuarioId);
-		this.quantidade = quantidade;
+		this.user = new Usuario(usuarioId);
+		this.quantity = quantidade;
 	}
 
 	public long getId() {
@@ -37,20 +37,20 @@ public class ItemDTO {
 		this.id = id;
 	}
 
-	public Descricao getDescricao() {
-		return descricao;
+	public Description getDescription() {
+		return description;
 	}
 
-	public void setDescricao(Descricao descricao) {
-		this.descricao = descricao;
+	public void setDescription(Description description) {
+		this.description = description;
 	}
 
-	public int getQuantidade() {
-		return quantidade;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public String getTags() {
@@ -61,20 +61,20 @@ public class ItemDTO {
 		this.tags = tags;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuario getUser() {
+		return user;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUser(Usuario user) {
+		this.user = user;
 	}
 
-	public long getUsuarioId() {
-		return usuarioId;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setUsuarioId(long usuarioId) {
-		this.usuarioId = usuarioId;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public Status getStatus() {
@@ -84,9 +84,9 @@ public class ItemDTO {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
+
 	public Item getItem() {
-		return new Item(this.id, this.descricao, this.quantidade, this.tags, this.status, this.usuario);
+		return new Item(this.id, this.description, this.quantity, this.tags, this.status, this.user);
 	}
 
 }

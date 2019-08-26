@@ -12,20 +12,23 @@ import javax.persistence.ManyToOne;
 public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	//TODO
+	///Traduzir para inglês
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@ManyToOne
-	private Descricao descricao;
+	private Description description;
 	
 	@Column(nullable = false)
-	private int quantidade;
+	private int quantity;
 	
 	private String tags;	
 
 	@ManyToOne
-	private Usuario usuario;
+	private Usuario user;
 	
 	private Status status;
 	
@@ -35,25 +38,15 @@ public class Item implements Serializable {
 		
 	}
 
-	public Item(long id, Descricao descricao, int quantidade, String tags, Status status, Usuario usuario) {
+	public Item(long id, Description descricao, int quantidade, String tags, Status status, Usuario usuario) {
 		this.id = id;
-		this.descricao = descricao;
-		this.quantidade = quantidade;
+		this.description = descricao;
+		this.quantity = quantidade;
 		this.tags = tags;
 		this.status = status;
-		this.usuario = usuario;
-	}
-	
-	// GETTERS & SETTERS
-
-	public Status getStatus() {
-		return status;
+		this.user = usuario;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-	
 	public long getId() {
 		return id;
 	}
@@ -62,20 +55,20 @@ public class Item implements Serializable {
 		this.id = id;
 	}
 
-	public Descricao getDescricao() {
-		return descricao;
+	public Description getDescription() {
+		return description;
 	}
 
-	public void setDescricao(Descricao descricao) {
-		this.descricao = descricao;
+	public void setDescription(Description description) {
+		this.description = description;
 	}
 
-	public int getQuantidade() {
-		return quantidade;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public String getTags() {
@@ -86,14 +79,23 @@ public class Item implements Serializable {
 		this.tags = tags;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuario getUser() {
+		return user;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	
+	// GETTERS & SETTERS
 	
 	
 }

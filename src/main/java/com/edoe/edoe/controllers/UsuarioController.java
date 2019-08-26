@@ -21,41 +21,41 @@ import com.edoe.edoe.models.Usuario;
 import com.edoe.edoe.repository.UsuarioRepository;
 
 @RestController
-@RequestMapping(value="/")
+@RequestMapping(value="/usuario")
 public class UsuarioController {
 	
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
-	@GetMapping("/usuarios")
+	@GetMapping("/")
 	public List<Usuario> getUsuarios() {
 		return usuarioRepository.findAll();
 	}
 	
-	@GetMapping("/usuario/{id}")
+	@GetMapping("/{id}")
 	public Usuario getUsuario(@PathVariable(value="id") long id) {
 		return usuarioRepository.findById(id);
 	}
 	
 	//pequisar usuarios pelo documento de identificacao
-	@GetMapping("/usuario/{identificacao}")
+	@GetMapping("/{identificacao}")
 	public Usuario getUsuario(@PathVariable(value="identificacao") String identificacao) {
 		return usuarioRepository.findByIdentificacao(identificacao);
 	}
 	
 	//pequisar usuarios pelo nome completo
-	@GetMapping("/usuario/{nome}")
+	@GetMapping("/{nome}")
 	public Usuario getUsuarioPorNome(@PathVariable(value="nome") String nome) {
 		return usuarioRepository.findByNome(nome);
 	}
 	
-	@PostMapping("/usuario")
+	@PostMapping("/")
 	public Doador cadastrarDoadores(@RequestBody Doador usuario) {
 		return usuarioRepository.save(usuario);
 	}
 	
 	//remover usuários do sistema localizados pelo seu documento de identificação
-	@DeleteMapping("/usuario")
+	@DeleteMapping("/")
 	public void delete(String identificacao) {
 		Usuario usuario = usuarioRepository.findByIdentificacao(identificacao);
 		usuarioRepository.delete(usuario);
