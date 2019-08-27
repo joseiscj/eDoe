@@ -10,8 +10,8 @@ import com.edoe.edoe.models.Status;
 
 public interface ItemRepository extends JpaRepository<Item, Long>{
 	Item findById(long id);
-	List<Item> findByStatus(Status status);
-	List<Item> findByDescriptionAndStatus(Description description, Status status);
-	List<Item> findByStatusOrderByQuantityDesc(Status status);
-	List<Item> findByStatusOrderByIdAsc(Status doacao);
+	List<Item> findAllByStatus(Status status);
+	List<Item> findAllByDescriptionAndStatus(Description description, Status status);
+	List<Item> findAllByStatusOrderByQuantityDesc(Status status);
+	List<Item> findAllByStatusOrderByIdAsc(Status doacao);
 }
