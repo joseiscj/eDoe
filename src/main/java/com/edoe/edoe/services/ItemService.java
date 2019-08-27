@@ -1,6 +1,7 @@
 package com.edoe.edoe.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.edoe.edoe.dto.ItemDTO;
 import com.edoe.edoe.models.Item;
 import com.edoe.edoe.models.Status;
 import com.edoe.edoe.repository.ItemRepository;
+import com.edoe.edoe.util.SortByScore;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Service
@@ -68,6 +70,15 @@ public class ItemService {
 		return itemRepository.findByStatusOrderByIdAsc(Status.DOACAO);
 	}
 	
+	public List<Item> match(Item itemNecessario) {
+		List<Item> list = itemRepository.findByDescriptionAndStatus(itemNecessario.getDescription(), Status.DOACAO);
+		for (Item item : list) {
+			tagScore(item, itemNecessario);
+		}
+		Collections.sort(list, new SortByScore());
+		return list;
+	}
+	
 	public List<String> matches(Item[] itensDoados, String identificationReceptor, Item[] necessariesItens) {
 		ArrayList<String> list = new ArrayList<String>();
 		for (int i = 0; i < itensDoados.length; i++) {
@@ -108,7 +119,7 @@ public class ItemService {
 		String[] doadoTags = itemDoado.getTags().split(",");
 		String[] necessaryTags = necessaryItem.getTags().split(",");
 		
-		int score = itemDoado.getMatchScore();
+		int score = 0;
 		for (int i = 0; i < doadoTags.length; i++) {
 			for (int j = 0; j < necessaryTags.length; j++) {
 				if (doadoTags[i].equals(necessaryTags[j])) {
