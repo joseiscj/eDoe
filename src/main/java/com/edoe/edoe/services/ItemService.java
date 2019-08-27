@@ -30,7 +30,7 @@ public class ItemService {
 	}
 	
 	public List<Item> findAllDonation(){
-		return itemRepository.findByStatus(Status.DOACAO);
+		return itemRepository.findAllByStatus(Status.DOACAO);
 	}
 	
 	public Item findById(long id) {
@@ -58,7 +58,7 @@ public class ItemService {
 	}
 
 	public List<Item> findAllDonationOrderedByQuantidade() {
-		return itemRepository.findByStatusOrderByQuantityDesc(Status.DOACAO);
+		return itemRepository.findAllByStatusOrderByQuantityDesc(Status.DOACAO);
 	}
 
 	public List<Item> findAllDonationByPartialDescription() {
@@ -67,11 +67,11 @@ public class ItemService {
 	}
 
 	public List<Item> findAllNecessaryOrderedByQuantidade() {
-		return itemRepository.findByStatusOrderByIdAsc(Status.DOACAO);
+		return itemRepository.findAllByStatusOrderByIdAsc(Status.DOACAO);
 	}
 	
 	public List<Item> match(Item itemNecessario) {
-		List<Item> list = itemRepository.findByDescriptionAndStatus(itemNecessario.getDescription(), Status.DOACAO);
+		List<Item> list = itemRepository.findAllByDescriptionAndStatus(itemNecessario.getDescription(), Status.DOACAO);
 		for (Item item : list) {
 			tagScore(item, itemNecessario);
 		}
@@ -79,40 +79,6 @@ public class ItemService {
 		return list;
 	}
 	
-	public List<String> matches(Item[] itensDoados, String identificationReceptor, Item[] necessariesItens) {
-		ArrayList<String> list = new ArrayList<String>();
-		for (int i = 0; i < itensDoados.length; i++) {
-			for (int j = 0; j < necessariesItens.length; j++) {
-				if (itensDoados[i].getDescription().getDescription()
-						.equalsIgnoreCase(necessariesItens[j].getDescription().getDescription())) {
-					tagScore(itensDoados[i], necessariesItens[j]);
-				}
-			}
-			
-		}
-		sort(itensDoados);
-		for (Item item : itensDoados) {
-			if (item.getMatchScore() > 0) {
-				list.add(item.getId() + " - " + item.getDescription().getDescription() + 
-						", tags: " + item.getTags() + ", quantidade: " + item.getQuantity() +
-						", doador: " + item.getUser() + "/" + item.getUser().getIdentificacao());
-			}
-		}
-		return list;
-	}
-	
-	//Utilizando o bubble sort para ordenar de forma descrcescente pelo match score
-	private void sort(Item[] itensDoados) {
-		for (int i = 1; i < itensDoados.length; i++) {
-		    for (int j = 0; j < i; j++) {
-		        if (itensDoados[i].getMatchScore() > itensDoados[j].getMatchScore()) {
-		            Item temp = itensDoados[i];
-		            itensDoados[i] = itensDoados[j];
-		            itensDoados[j] = temp;
-		        }
-		    }
-		}
-	}
 	
 	//Calcula o score de cada item doado
 	private void tagScore(Item itemDoado, Item necessaryItem) {
