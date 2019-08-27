@@ -32,6 +32,8 @@ public class Item implements Serializable {
 	
 	private Status status;
 	
+	private int matchScore;
+	
 	//CONSTRUCTOR
 	
 	public Item() {
@@ -45,8 +47,10 @@ public class Item implements Serializable {
 		this.tags = tags;
 		this.status = status;
 		this.user = usuario;
+		this.matchScore = 0;
 	}
 
+	
 	public long getId() {
 		return id;
 	}
@@ -94,6 +98,15 @@ public class Item implements Serializable {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
+	public int getMatchScore() {
+		return matchScore;
+	}
+	
+	public void setMatchScore(int matchScore) {
+		this.matchScore = matchScore;
+	}
+
 	
 	// GETTERS & SETTERS
 	
