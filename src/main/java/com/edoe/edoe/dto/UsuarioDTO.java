@@ -30,6 +30,17 @@ public class UsuarioDTO {
 		this.identificacao = identificacao;
 		this.tipo = tipo;
 	}
+	
+	public UsuarioDTO(String nome, String email, String celular, Classe classe, String identificacao,
+			Tipo tipo) {
+		this.nome = nome;
+		this.email = email;
+		this.celular = celular;
+		this.classe = classe;
+		this.identificacao = identificacao;
+		this.tipo = tipo;
+	}
+
 
 	public long getId() {
 		return id;

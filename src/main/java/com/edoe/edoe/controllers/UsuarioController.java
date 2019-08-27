@@ -1,7 +1,6 @@
 package com.edoe.edoe.controllers;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edoe.edoe.dto.UsuarioDTO;
+import com.edoe.edoe.models.Classe;
+import com.edoe.edoe.models.Tipo;
 import com.edoe.edoe.models.Usuario;
 import com.edoe.edoe.services.UsuarioService;
 
@@ -49,7 +50,7 @@ public class UsuarioController {
 		return usuarioService.findByNome(nome);
 	}
 	
-	@PostMapping("/usuario")
+	@PostMapping("/")
 	public Usuario cadastrarDoadores(@RequestBody UsuarioDTO usuarioDTO) {
 		return usuarioService.createDoador(usuarioDTO);
 	}
@@ -60,19 +61,48 @@ public class UsuarioController {
 		usuarioService.delete(identificacao);
 	}
 	
-	/*
-	 * //cadastrar novos usuários receptores via leitura de arquivo public void
-	 * cadastraReceptores(String novosReceptores) throws IOException { Scanner sc =
-	 * new Scanner(new File(novosReceptores)); String linha = null;
-	 * while(sc.hasNextLine()) { linha = sc.nextLine(); String[] dadosUsuario =
-	 * linha.split(","); if (dadosUsuario.length != 4) { throw new
-	 * IOException("Campos inválidos"); } Usuario usuario = new
-	 * Usuario(dadosUsuario[0], dadosUsuario[1], dadosUsuario[2], dadosUsuario[3],
-	 * dadosUsuario[4])); } }
-	 */
+	@PostMapping("/receptores")
+	public void cadastraReceptores(@RequestBody String nomeDoArquivoCsv) throws IOException {
+		Scanner sc = new Scanner(new File(nomeDoArquivoCsv));
+		String linha = null;
+		while (sc.hasNextLine()) {
+			linha = sc.nextLine();
+			
+			if(linha.equals("id,nome,e-mail,celular,classe")) {
+				continue;
+			}
+			String[] dadosTriangulo = linha.split(",");
+			
+			UsuarioDTO usuarioDTO = new UsuarioDTO(dadosTriangulo[1], dadosTriangulo[2], dadosTriangulo[3], getClasse(dadosTriangulo[4]), dadosTriangulo[0], Tipo.RECEPTOR);
+			usuarioService.createReceptor(usuarioDTO);
+		}
+		sc.close();
+	}
+	
+	private Classe getClasse(String classe) {
+		switch (classe) {
+			case "PESSOA_FISICA": 
+				return Classe.PESSOA_FISICA;
+			case "IGREJA":
+				return Classe.IGREJA;
+			case "ORGAO_PUBLICO_MUNICIPAL":
+				return Classe.ORGAO_PUBLICO_MUNICIPAL;
+			case "ORGAO_PUBLICO_ESTADUAL":
+				return Classe.ORGAO_PUBLICO_ESTADUAL;
+			case "ORGAO_PUBLICO_FEDERAL":
+				return Classe.ORGAO_PUBLICO_FEDERAL;
+			case "ONG":
+				return Classe.ONG;
+			case "ASSOCIACAO":
+				return Classe.ASSOCIACAO;
+			case "SOCIEDADE":
+				return Classe.SOCIEDADE;
+		}
+		return null;
+	}
 	
 	//atualizar nome, email e celular de usuário pelo documento de identificacao
-	@PutMapping("/usuario")
+	@PutMapping("/")
 	public Usuario put(String identificacao, String nome, String email, String celular) {
 		return usuarioService.update(identificacao, nome, email, celular);
 	}

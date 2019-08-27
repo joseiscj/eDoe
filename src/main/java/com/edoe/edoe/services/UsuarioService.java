@@ -22,6 +22,16 @@ public class UsuarioService {
 		return usuarioRepository.save(usuario);
 	}
 	
+	public Usuario createReceptor(UsuarioDTO usuarioDTO) {
+		Usuario usuario = usuarioRepository.findByIdentificacao(usuarioDTO.getIdentificacao());
+		
+		if (usuario == null) {
+			return usuarioRepository.save(usuarioDTO.getUsuario());
+		} else {
+			return usuario;
+		}
+	}
+	
 	public Usuario findByIdentificacao(String identificacao) {
 		return usuarioRepository.findByIdentificacao(identificacao);
 	}
