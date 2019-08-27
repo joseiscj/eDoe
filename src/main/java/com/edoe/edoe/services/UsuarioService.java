@@ -15,7 +15,7 @@ public class UsuarioService {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
+		
 	public Usuario createDoador(UsuarioDTO usuarioDTO) {
 		Usuario usuario = usuarioDTO.getUsuario();
 		usuario.setTipo(Tipo.DOADOR);
@@ -52,7 +52,6 @@ public class UsuarioService {
 		Usuario usuario = usuarioRepository.findByIdentificacao(identificacao);
 		usuarioRepository.delete(usuario);
 	}
-	
 	
 	public List<Usuario> findAll(){
 		return usuarioRepository.findAll();
