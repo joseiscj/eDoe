@@ -24,7 +24,7 @@ import com.edoe.edoe.models.Usuario;
 import com.edoe.edoe.services.UsuarioService;
 
 @RestController
-@RequestMapping(value="/usuario")
+@RequestMapping("usuario")
 public class UsuarioController {
 	
 	@Autowired

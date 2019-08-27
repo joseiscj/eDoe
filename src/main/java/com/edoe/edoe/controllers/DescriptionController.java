@@ -13,7 +13,7 @@ import com.edoe.edoe.models.Description;
 import com.edoe.edoe.services.DescriptionService;
 
 @RestController
-@RequestMapping(value="/descricao")
+@RequestMapping("descricao")
 public class DescriptionController {
 	
 	@Autowired

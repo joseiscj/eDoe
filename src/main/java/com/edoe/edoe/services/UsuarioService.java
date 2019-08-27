@@ -23,7 +23,7 @@ public class UsuarioService {
 	}
 	
 	public Usuario createReceptor(UsuarioDTO usuarioDTO) {
-		Usuario usuario = usuarioRepository.findByIdentification(usuarioDTO.getIdentificacao());
+		Usuario usuario = usuarioRepository.findByIdentificacao(usuarioDTO.getIdentificacao());
 		
 		if (usuario == null) {
 			return usuarioRepository.save(usuarioDTO.getUsuario());
@@ -33,11 +33,11 @@ public class UsuarioService {
 	}
 	
 	public Usuario findByIdentificacao(String identificacao) {
-		return usuarioRepository.findByIdentification(identificacao);
+		return usuarioRepository.findByIdentificacao(identificacao);
 	}
 	
 	public Usuario findByName(String nome) {
-		return usuarioRepository.findByName(nome);
+		return usuarioRepository.findByNome(nome);
 	}
 	
 	public Usuario update(String identificacao, String nome, String email, String celular) {
@@ -49,7 +49,7 @@ public class UsuarioService {
 	}
 	
 	public void delete(String identificacao) {
-		Usuario usuario = usuarioRepository.findByIdentification(identificacao);
+		Usuario usuario = usuarioRepository.findByIdentificacao(identificacao);
 		usuarioRepository.delete(usuario);
 	}
 	

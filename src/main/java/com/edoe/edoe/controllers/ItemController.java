@@ -20,7 +20,7 @@ import com.edoe.edoe.services.ItemService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RestController
-@RequestMapping(value="/item")
+@RequestMapping("item")
 public class ItemController {
 	
 	@Autowired
@@ -76,6 +76,7 @@ public class ItemController {
 		}
 	}
 	
+	//receber o id do item a ser apagado
 	//Remover itens a serem doados/necessarios
 	@DeleteMapping("/")
 	public ResponseEntity<Object> delete(@RequestBody ItemDTO itemDTO) {
