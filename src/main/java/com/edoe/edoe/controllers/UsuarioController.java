@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,41 +31,66 @@ public class UsuarioController {
 	UsuarioService usuarioService;
 	
 	@GetMapping("/")
-	public List<Usuario> getUsuarios() {
-		return usuarioService.findAll();
+	public ResponseEntity<List<Usuario>> getUsers() {
+		try {
+			return new ResponseEntity<List<Usuario>>(usuarioService.findAll(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@GetMapping("/{id}")
-	public Usuario getUsuario(@PathVariable(value="id") long id) {
-		return usuarioService.findById(id);
+	public ResponseEntity<Usuario> getUser(@PathVariable(value="id") long id) {
+		try {
+			return new ResponseEntity<Usuario>(usuarioService.findById(id), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	//pequisar usuarios pelo documento de identificacao
-	@GetMapping("/{identificacao}")
-	public Usuario getUsuario(@PathVariable(value="identificacao") String identificacao) {
-		return usuarioService.findByIdentificacao(identificacao);
+	@GetMapping("/{identification}")
+	public ResponseEntity<Usuario> getUser(@PathVariable(value="identification") String identification) {
+		try {
+			return new ResponseEntity<Usuario>(usuarioService.findByIdentificacao(identification), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	//pequisar usuarios pelo nome completo
-	@GetMapping("/{nome}")
-	public Usuario getUsuarioPorNome(@PathVariable(value="nome") String nome) {
-		return usuarioService.findByNome(nome);
+	@GetMapping("/{name}")
+	public ResponseEntity<Usuario> getUserPerName(@PathVariable(value="nome") String name) {
+		try {
+			return new ResponseEntity<Usuario>(usuarioService.findByName(name), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@PostMapping("/")
-	public Usuario cadastrarDoadores(@RequestBody UsuarioDTO usuarioDTO) {
-		return usuarioService.createDoador(usuarioDTO);
+	public ResponseEntity<Usuario> createDoador(@RequestBody UsuarioDTO usuarioDTO) {
+		try {
+			return new ResponseEntity<Usuario>(usuarioService.createDoador(usuarioDTO), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	//remover usuários do sistema localizados pelo seu documento de identificação
 	@DeleteMapping("/")
-	public void delete(String identificacao) {
-		usuarioService.delete(identificacao);
+	public ResponseEntity<Object> delete(String identification) {
+		try {
+			usuarioService.delete(identification);
+			return new ResponseEntity<Object>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@PostMapping("/receptores")
-	public void cadastraReceptores(@RequestBody String nomeDoArquivoCsv) throws IOException {
-		Scanner sc = new Scanner(new File(nomeDoArquivoCsv));
+	public void createReceptor(@RequestBody String CSVName) throws IOException {
+		Scanner sc = new Scanner(new File(CSVName));
 		String linha = null;
 		while (sc.hasNextLine()) {
 			linha = sc.nextLine();
@@ -103,7 +130,11 @@ public class UsuarioController {
 	
 	//atualizar nome, email e celular de usuário pelo documento de identificacao
 	@PutMapping("/")
-	public Usuario put(String identificacao, String nome, String email, String celular) {
-		return usuarioService.update(identificacao, nome, email, celular);
+	public ResponseEntity<Usuario> put(String identificacao, String nome, String email, String celular) {
+		try {
+			return new ResponseEntity<>(usuarioService.update(identificacao, nome, email, celular), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }
