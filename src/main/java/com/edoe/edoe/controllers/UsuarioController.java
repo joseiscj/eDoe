@@ -30,16 +30,17 @@ public class UsuarioController {
 	@Autowired
 	UsuarioService usuarioService;
 	
-	@GetMapping("/")
+	@GetMapping("/all")
 	public ResponseEntity<List<Usuario>> getUsers() {
 		try {
+			System.out.println("AAAAAAAAAAAAAAAAAAA");
 			return new ResponseEntity<List<Usuario>>(usuarioService.findAll(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<Usuario> getUser(@PathVariable(value="id") long id) {
 		try {
 			return new ResponseEntity<Usuario>(usuarioService.findById(id), HttpStatus.OK);
@@ -49,7 +50,7 @@ public class UsuarioController {
 	}
 	
 	//pequisar usuarios pelo documento de identificacao
-	@GetMapping("/{identification}")
+	@GetMapping("/identification/{identification}")
 	public ResponseEntity<Usuario> getUser(@PathVariable(value="identification") String identification) {
 		try {
 			return new ResponseEntity<Usuario>(usuarioService.findByIdentificacao(identification), HttpStatus.OK);
@@ -59,8 +60,8 @@ public class UsuarioController {
 	}
 	
 	//pequisar usuarios pelo nome completo
-	@GetMapping("/{name}")
-	public ResponseEntity<Usuario> getUserPerName(@PathVariable(value="nome") String name) {
+	@GetMapping("/name/{name}")
+	public ResponseEntity<Usuario> getUserPerName(@PathVariable(value="name") String name) {
 		try {
 			return new ResponseEntity<Usuario>(usuarioService.findByName(name), HttpStatus.OK);
 		} catch (Exception e) {
@@ -78,8 +79,8 @@ public class UsuarioController {
 	}
 	
 	//remover usuários do sistema localizados pelo seu documento de identificação
-	@DeleteMapping("/")
-	public ResponseEntity<Object> delete(String identification) {
+	@DeleteMapping("/identification/{identification}")
+	public ResponseEntity<Object> delete(@PathVariable(value="identification") String identification) {
 		try {
 			usuarioService.delete(identification);
 			return new ResponseEntity<Object>(HttpStatus.OK);
@@ -100,7 +101,7 @@ public class UsuarioController {
 			}
 			String[] dadosTriangulo = linha.split(",");
 			
-			UsuarioDTO usuarioDTO = new UsuarioDTO(dadosTriangulo[1], dadosTriangulo[2], dadosTriangulo[3], getClasse(dadosTriangulo[4]), dadosTriangulo[0], Tipo.RECEPTOR);
+			UsuarioDTO usuarioDTO = new UsuarioDTO(dadosTriangulo[1], dadosTriangulo[2], dadosTriangulo[3], getClasse(dadosTriangulo[4]), dadosTriangulo[0]);
 			usuarioService.createReceptor(usuarioDTO);
 		}
 		sc.close();
@@ -129,10 +130,10 @@ public class UsuarioController {
 	}
 	
 	//atualizar nome, email e celular de usuário pelo documento de identificacao
-	@PutMapping("/")
-	public ResponseEntity<Usuario> put(String identificacao, String nome, String email, String celular) {
+	@PutMapping("/{identificacao}")
+	public ResponseEntity<Usuario> put(@PathVariable String identificacao, @RequestBody Usuario usuario) {
 		try {
-			return new ResponseEntity<>(usuarioService.update(identificacao, nome, email, celular), HttpStatus.OK);
+			return new ResponseEntity<>(usuarioService.update(identificacao, usuario.getNome(), usuario.getEmail(), usuario.getCelular()), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

@@ -26,6 +26,7 @@ public class UsuarioService {
 		Usuario usuario = usuarioRepository.findByIdentificacao(usuarioDTO.getIdentificacao());
 		
 		if (usuario == null) {
+			usuarioDTO.setTipo(Tipo.DOADOR);
 			return usuarioRepository.save(usuarioDTO.getUsuario());
 		} else {
 			return usuario;
@@ -42,10 +43,10 @@ public class UsuarioService {
 	
 	public Usuario update(String identificacao, String nome, String email, String celular) {
 		Usuario usuario = findByIdentificacao(identificacao);
-		usuario.setNome(nome);
-		usuario.setEmail(email);
-		usuario.setCelular(celular);
-		return usuario;
+		if (nome != null && !nome.isEmpty()) usuario.setNome(nome);
+		if (email != null && !email.isEmpty()) usuario.setEmail(email);
+		if (celular != null && !celular.isEmpty()) usuario.setCelular(celular);
+		return usuarioRepository.save(usuario);
 	}
 	
 	public void delete(String identificacao) {

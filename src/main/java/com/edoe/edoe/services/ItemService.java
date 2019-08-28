@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.edoe.edoe.dto.ItemDTO;
 import com.edoe.edoe.models.Item;
 import com.edoe.edoe.models.Status;
+import com.edoe.edoe.models.Usuario;
 import com.edoe.edoe.repository.ItemRepository;
 import com.edoe.edoe.util.SortByScore;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -23,8 +24,13 @@ public class ItemService {
 	@Autowired
 	DescriptionService descriptionService;
 	
+	@Autowired
+	UsuarioService userService;
+	
 	public Item create(ItemDTO itemDTO) {
 		Item item = itemDTO.getItem();
+		Usuario usuario = userService.findById(itemDTO.getUserId());
+		item.setUser(usuario);
 		descriptionService.create(item.getDescription());
 		return itemRepository.save(item);
 	}
@@ -37,21 +43,20 @@ public class ItemService {
 		return itemRepository.findById(id);
 	}
 	
-	public void delete(ItemDTO itemDTO) {
-		Item item = itemDTO.getItem();
-		itemRepository.delete(item);
+	public void delete(long id) {
+		itemRepository.deleteById(id);
 	}
 	
 	//Só deve ser possível atualizar 'tags' e 'quantidade' de um item
-	public Item update(long id, ObjectNode json) {
+	public Item update(long id, ItemDTO itemDTO) {
 		Item item = itemRepository.findById(id);
-		
-		if (json.get("tags") != null) {
-			item.setTags(json.get("tags").asText());
+		System.out.println(item);
+		if (itemDTO.getQuantity() > 0) {
+			item.setQuantity(itemDTO.getQuantity());
 		}
 		
-		if (json.get("quantidade") != null) {
-			item.setQuantity(json.get("quantidade").asInt());
+		if (itemDTO.getTags() != null) {
+			item.setTags(itemDTO.getTags());
 		}
 	
 		return itemRepository.save(item);
@@ -70,8 +75,10 @@ public class ItemService {
 		return itemRepository.findAllByStatusOrderByIdAsc(Status.DOACAO);
 	}
 	
-	public List<Item> match(Item itemNecessario) {
+	public List<Item> match(long id) {
+		Item itemNecessario = itemRepository.findById(id);
 		List<Item> list = itemRepository.findAllByDescriptionAndStatus(itemNecessario.getDescription(), Status.DOACAO);
+		list.remove(itemNecessario);
 		for (Item item : list) {
 			tagScore(item, itemNecessario);
 		}
