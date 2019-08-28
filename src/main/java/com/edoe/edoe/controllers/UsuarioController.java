@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.edoe.edoe.dto.UsuarioDTO;
 import com.edoe.edoe.models.Classe;
-import com.edoe.edoe.models.Tipo;
 import com.edoe.edoe.models.Usuario;
 import com.edoe.edoe.services.UsuarioService;
 
@@ -33,7 +32,6 @@ public class UsuarioController {
 	@GetMapping("/all")
 	public ResponseEntity<List<Usuario>> getUsers() {
 		try {
-			System.out.println("AAAAAAAAAAAAAAAAAAA");
 			return new ResponseEntity<List<Usuario>>(usuarioService.findAll(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
