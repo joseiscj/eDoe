@@ -16,6 +16,9 @@
    
    Utilizamos o *Spring JPA* para integrarmos os objetos Java em um banco de dados, possibilitando a persistência dos mesmos. A IDE utilizada foi o *Eclipse IDE*.
    
+   # Instalação
+   Primeiro, é necessário **clonar** o [projeto do GitHub](https://github.com/joseiscj/eDoe.git), baixá-lo como **projeto Maven**, editá-lo em uma **IDE** de sua preferência (Eclipse STS, IntelliJ, etc) e, em seguida, selecionar o projeto e dar *run* para que o mesmo seja executado.
+   
 # Autoria e contribuições
   Os desenvolvedores do projeto são **José Ivan Silva da Cruz Júnior** (joseiscj) e **Marcos César** (Marcoozvn).
   
