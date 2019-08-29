@@ -35,6 +35,10 @@ public class ItemService {
 		return itemRepository.save(item);
 	}
 	
+	public Item update(Item item) {
+		return itemRepository.save(item);
+	}
+	
 	public List<Item> findAllDonation(){
 		return itemRepository.findAllByStatus(Status.DOACAO);
 	}
@@ -72,7 +76,7 @@ public class ItemService {
 	}
 
 	public List<Item> findAllNecessaryOrderedByQuantidade() {
-		return itemRepository.findAllByStatusOrderByIdAsc(Status.DOACAO);
+		return itemRepository.findAllByStatusOrderByIdAsc(Status.NECESSARIO);
 	}
 	
 	public List<Item> match(long id) {
