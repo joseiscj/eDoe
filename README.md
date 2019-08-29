@@ -8,6 +8,9 @@
   
   [Descrição completa do projeto](https://docs.google.com/document/d/e/2PACX-1vST2TI5lDbtMlv8rhFYJkYnrfgqzyWDv6DDvvAajz3_KK4tAs_UnAbYdI6oeMQA6jEHo5HwUAatHmd8/pub)
   
+  # Diagrama
+  [Diagrama ER](https://www.lucidchart.com/invitations/accept/e59ce12a-a45c-4c78-995e-0984821c3a90)
+  
   # Pré requisitos
    O Sistema Operacional usado foi o *Linux* e as tecnologias utilizadas foram a LP *Java*, *Spring Boot* e a API *Postman* para testar o serviço RESTful por meio do envio de requisições HTTP e da análise do seu retorno. 
    
