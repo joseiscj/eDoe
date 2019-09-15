@@ -13,7 +13,6 @@ import com.edoe.edoe.models.Status;
 import com.edoe.edoe.models.Usuario;
 import com.edoe.edoe.repository.ItemRepository;
 import com.edoe.edoe.util.SortByScore;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Service
 public class ItemService {
@@ -41,6 +40,10 @@ public class ItemService {
 	
 	public List<Item> findAllDonation(){
 		return itemRepository.findAllByStatus(Status.DOACAO);
+	}
+
+	public List<Item> findAll(){
+		return itemRepository.findAll();
 	}
 	
 	public Item findById(long id) {

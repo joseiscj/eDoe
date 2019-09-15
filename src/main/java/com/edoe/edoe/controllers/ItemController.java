@@ -1,8 +1,14 @@
 package com.edoe.edoe.controllers;
 
-import java.util.List;
+import java.util.Optional;
+
+import com.edoe.edoe.dto.ItemDTO;
+import com.edoe.edoe.models.Status;
+import com.edoe.edoe.services.ItemService;
+import com.edoe.edoe.util.exceptions.StatusException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Description;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,12 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.edoe.edoe.dto.ItemDTO;
-import com.edoe.edoe.models.Item;
-import com.edoe.edoe.services.ItemService;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RestController
 @RequestMapping("item")
@@ -26,41 +28,31 @@ public class ItemController {
 	@Autowired
 	ItemService itemService;	
 	
-	//O sistema deve permitir uma listagem de todos os itens inseridos no sistema ordenada pela quantidade do item no sistema.
-	@GetMapping("/donation")
-	public ResponseEntity findAllDonationOrdered() {
+	@GetMapping("/")
+	public ResponseEntity get(@RequestParam(value="status", required=false) Optional<Status> status, @RequestParam(value="description", required=false) Optional<Description> description){
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(itemService.findAllDonationOrderedByQuantidade());
+			if (status.isPresent()) {
+				if (status.get().equals(Status.DOACAO)) return ResponseEntity.ok(itemService.findAllDonationOrderedByQuantidade());
+
+				else if (status.get().equals(Status.NECESSARIO)) return ResponseEntity.ok(itemService.findAllNecessaryOrderedByQuantidade());
+
+				else throw new StatusException("O status não é válido.");
+
+			} else if (description.isPresent()){
+				return ResponseEntity.ok(itemService.findAllDonationByPartialDescription());
+			} else {
+				return ResponseEntity.ok(itemService.findAll());
+			}
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
-	
-	//Listar todos os itens necessário cadastrados no eDoe.com ordenados pelo identificador único dos itens;
-	@GetMapping("/necessary")
-	public ResponseEntity findAllNecessaryOrdered() {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(itemService.findAllNecessaryOrderedByQuantidade());
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-		}
-	}
-	
+
 	//Exibir informações de um item já cadastrado através do seu identificador único;
 	@GetMapping("/{id}")
-	public ResponseEntity getById(@PathVariable(value="id") long id) {
+	public ResponseEntity getById(@PathVariable("id") long id) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(itemService.findById(id));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-		}
-	}
-	
-	//O sistema deve listar todos os itens para doacao relacionados a uma dada string de pesquisa.
-	@GetMapping("/donation/description")
-	public ResponseEntity getByPartialDescription(@RequestBody String string) {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(itemService.findAllDonationByPartialDescription());
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}

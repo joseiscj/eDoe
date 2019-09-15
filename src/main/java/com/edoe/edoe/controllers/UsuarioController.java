@@ -2,7 +2,7 @@ package com.edoe.edoe.controllers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,57 +15,44 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edoe.edoe.dto.UsuarioDTO;
 import com.edoe.edoe.models.Classe;
-import com.edoe.edoe.models.Tipo;
 import com.edoe.edoe.models.Usuario;
 import com.edoe.edoe.services.UsuarioService;
 
 @RestController
 @RequestMapping("usuario")
 public class UsuarioController {
-	
+    	
 	@Autowired
 	UsuarioService usuarioService;
 	
-	@GetMapping("/all")
-	public ResponseEntity<List<Usuario>> getUsers() {
+	@GetMapping("/")
+	public ResponseEntity get(@RequestParam(value="identification", required = false) Optional<String> identification, @RequestParam(value="name", required = false) Optional<String> name) {
 		try {
-			System.out.println("AAAAAAAAAAAAAAAAAAA");
-			return new ResponseEntity<List<Usuario>>(usuarioService.findAll(), HttpStatus.OK);
+			if (identification.isPresent()) {
+				return ResponseEntity.ok(usuarioService.findByIdentificacao(identification.get()));
+			}
+			else if (name.isPresent()){
+				return ResponseEntity.ok(usuarioService.findByName(name.get()));
+			} 
+			else {
+				return ResponseEntity.ok(usuarioService.findAll());
+			}
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	
-	@GetMapping("/id/{id}")
-	public ResponseEntity<Usuario> getUser(@PathVariable(value="id") long id) {
+	@GetMapping("/{id}")
+	public ResponseEntity getUser(@PathVariable(value="id") long id) {
 		try {
-			return new ResponseEntity<Usuario>(usuarioService.findById(id), HttpStatus.OK);
+			return ResponseEntity.ok(usuarioService.findById(id));
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	//pequisar usuarios pelo documento de identificacao
-	@GetMapping("/identification/{identification}")
-	public ResponseEntity<Usuario> getUser(@PathVariable(value="identification") String identification) {
-		try {
-			return new ResponseEntity<Usuario>(usuarioService.findByIdentificacao(identification), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	//pequisar usuarios pelo nome completo
-	@GetMapping("/name/{name}")
-	public ResponseEntity<Usuario> getUserPerName(@PathVariable(value="name") String name) {
-		try {
-			return new ResponseEntity<Usuario>(usuarioService.findByName(name), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	
@@ -79,11 +66,11 @@ public class UsuarioController {
 	}
 	
 	//remover usuários do sistema localizados pelo seu documento de identificação
-	@DeleteMapping("/identification/{identification}")
-	public ResponseEntity<Object> delete(@PathVariable(value="identification") String identification) {
+	@DeleteMapping("/{identification}")
+	public ResponseEntity delete(@PathVariable("identification") String identification) {
 		try {
 			usuarioService.delete(identification);
-			return new ResponseEntity<Object>(HttpStatus.OK);
+			return ResponseEntity.ok("Deletado com sucesso!");
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

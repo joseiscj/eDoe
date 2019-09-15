@@ -1,6 +1,7 @@
 package com.edoe.edoe.models;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,35 +9,42 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 
-public class Usuario implements Serializable{
+public class Usuario implements Serializable, UserDetails {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@Column(nullable = false)
 	private String email;
-	
+
 	@Column(nullable = false)
 	private String celular;
-	
+
 	@Column(nullable = false)
 	private Classe classe;
-	
+
 	@Column(nullable = false, unique = true)
 	private String identificacao;
-	
+
 	@Column(nullable = false)
 	private Tipo tipo;
-	
-	//CONSTRUCTOR
-	
+
+	private String username;
+
+	private String password;
+
+	// CONSTRUCTOR
+
 	public Usuario(long id, String nome, String email, String celular, Classe classe, String identificacao, Tipo tipo) {
 		this.id = id;
 		this.nome = nome;
@@ -51,13 +59,28 @@ public class Usuario implements Serializable{
 
 	}
 
-	
 	public Usuario(long id) {
 		this.id = id;
 	}
-	
-// GETTERS AND SETTERS
-	
+
+	// GETTERS AND SETTERS
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getIdentificacao() {
 		return identificacao;
 	}
@@ -101,11 +124,11 @@ public class Usuario implements Serializable{
 	public Classe getClasse() {
 		return classe;
 	}
-	
+
 	public void setClasse(Classe classe) {
 		this.classe = classe;
 	}
-	
+
 	public Tipo getTipo() {
 		return tipo;
 	}
@@ -116,8 +139,38 @@ public class Usuario implements Serializable{
 
 	@Override
 	public String toString() {
-		return this.nome + "/" + this.identificacao + ", " + this.email + ", " + this.celular + ", status:" +
-	"{" + this.tipo + "}";
+		return this.nome + "/" + this.identificacao + ", " + this.email + ", " + this.celular + ", status:" + "{"
+				+ this.tipo + "}";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 	
 }

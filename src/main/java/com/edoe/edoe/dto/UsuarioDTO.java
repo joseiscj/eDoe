@@ -19,6 +19,10 @@ public class UsuarioDTO {
 	private String identificacao;
 	
 	private Tipo tipo;
+
+	private String username;
+
+	private String password;
 	
 	public UsuarioDTO() {
 		
@@ -99,6 +103,22 @@ public class UsuarioDTO {
 
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	public Usuario getUsuario() {

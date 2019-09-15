@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-EdoeApplication<edoe>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.edoe.edoe.EdoeApplication",
+            "projectName": "edoe",
+            "args": ""
+        }
+    ]
+}
