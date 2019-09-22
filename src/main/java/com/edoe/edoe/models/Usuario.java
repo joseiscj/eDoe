@@ -11,6 +11,7 @@ import javax.persistence.Id;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 
@@ -45,7 +46,7 @@ public class Usuario implements Serializable, UserDetails {
 
 	// CONSTRUCTOR
 
-	public Usuario(long id, String nome, String email, String celular, Classe classe, String identificacao, Tipo tipo) {
+	public Usuario(long id, String nome, String email, String celular, Classe classe, String identificacao, Tipo tipo, String username, String password) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
@@ -53,6 +54,8 @@ public class Usuario implements Serializable, UserDetails {
 		this.classe = classe;
 		this.identificacao = identificacao;
 		this.tipo = tipo;
+		this.username = username;
+		this.password = new BCryptPasswordEncoder().encode(password);
 	}
 
 	public Usuario() {

@@ -57,12 +57,11 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity<Usuario> createDoador(@RequestBody UsuarioDTO usuarioDTO) {
+	public ResponseEntity createDoador(@RequestBody UsuarioDTO usuarioDTO) {
 		try {
-			return new ResponseEntity<Usuario>(usuarioService.createDoador(usuarioDTO), HttpStatus.OK);
+			return ResponseEntity.ok(usuarioService.createDoador(usuarioDTO));
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());		}
 	}
 	
 	//remover usuários do sistema localizados pelo seu documento de identificação
@@ -118,11 +117,11 @@ public class UsuarioController {
 	
 	//atualizar nome, email e celular de usuário pelo documento de identificacao
 	@PutMapping("/{identificacao}")
-	public ResponseEntity<Usuario> put(@PathVariable String identificacao, @RequestBody Usuario usuario) {
+	public ResponseEntity put(@PathVariable String identificacao, @RequestBody Usuario usuario) {
 		try {
-			return new ResponseEntity<>(usuarioService.update(identificacao, usuario.getNome(), usuario.getEmail(), usuario.getCelular()), HttpStatus.OK);
+			return ResponseEntity.ok(usuarioService.update(identificacao, usuario.getNome(), usuario.getEmail(), usuario.getCelular()));
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 }

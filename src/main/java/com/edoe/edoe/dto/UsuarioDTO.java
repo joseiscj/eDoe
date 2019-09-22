@@ -47,7 +47,6 @@ public class UsuarioDTO {
 		this.identificacao = identificacao;
 	}
 
-
 	public long getId() {
 		return id;
 	}
@@ -123,7 +122,7 @@ public class UsuarioDTO {
 	
 	public Usuario getUsuario() {
 		return new Usuario(this.id, this.nome, this.email, this.celular, this.classe, this.identificacao,
-				this.tipo);
+				this.tipo, this.username, this.password);
 	}
 	
 	
