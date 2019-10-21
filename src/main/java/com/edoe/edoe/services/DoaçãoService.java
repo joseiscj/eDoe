@@ -10,7 +10,7 @@ import com.edoe.edoe.models.Item;
 import com.edoe.edoe.repository.DoacaoRepository;
 
 @Service
-public class DoacaoService {
+public class DoaçãoService {
 	
 	@Autowired
 	DoacaoRepository doacaoRepository;

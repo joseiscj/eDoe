@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.edoe.edoe.services.DoacaoService;
+import com.edoe.edoe.services.DoaçãoService;
 
 @RestController
 @RequestMapping("doacao")
 public class DoacaoController {
 	
 	@Autowired
-	DoacaoService doacaoService;
+	DoaçãoService doacaoService;
 	
 	@PostMapping("/{itemNecessarioId}/{itemDoacaoId}")
 	public ResponseEntity makeDonation(@PathVariable(value="itemNecessarioId") long idNec, @PathVariable(value="itemDoacaoId") long idDoa) {
