@@ -3,6 +3,9 @@ package com.edoe.edoe.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.edoe.edoe.dto.UsuarioDTO;
@@ -54,19 +57,23 @@ public class UsuarioService {
 		usuarioRepository.delete(usuario);
 	}
 	
+	@Cacheable(cacheNames = "Usuarios", key="#root.method.name")
 	public List<Usuario> findAll(){
 		return usuarioRepository.findAll();
 	}
 	
+	@Cacheable(cacheNames = "Usuario", key="#identifier")
 	public Usuario findById(long id) {
 		return usuarioRepository.findById(id);
 	}
 	
+	@CacheEvict(cacheNames = "deletedUsuario", key="#identifier")
 	public void delete(UsuarioDTO usuarioDTO) {
 		Usuario usuario = usuarioDTO.getUsuario();
 		usuarioRepository.delete(usuario);
 	}
 	
+	@CachePut(cacheNames = "newUsuario", key="#company.getIdentifier()")
 	public Usuario update(UsuarioDTO usuarioDTO) {
 		Usuario usuario = usuarioDTO.getUsuario();
 		return usuarioRepository.save(usuario);
