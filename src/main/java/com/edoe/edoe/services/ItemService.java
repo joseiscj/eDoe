@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.edoe.edoe.dto.ItemDTO;
@@ -41,20 +44,24 @@ public class ItemService {
 	public List<Item> findAllDonation(){
 		return itemRepository.findAllByStatus(Status.DOACAO);
 	}
-
+	
+	@Cacheable(cacheNames = "Itens", key="#itens.findAll")
 	public List<Item> findAll(){
 		return itemRepository.findAll();
 	}
 	
+	@Cacheable(cacheNames = "Item", key="#identifier")
 	public Item findById(long id) {
 		return itemRepository.findById(id);
 	}
 	
+	@CacheEvict(cacheNames = "deletedItem", key="#identifier")
 	public void delete(long id) {
 		itemRepository.deleteById(id);
 	}
 	
 	//Só deve ser possível atualizar 'tags' e 'quantidade' de um item
+	@CachePut(cacheNames = "newItem", key="#company.getIdentifier()")
 	public Item update(long id, ItemDTO itemDTO) {
 		Item item = itemRepository.findById(id);
 		System.out.println(item);

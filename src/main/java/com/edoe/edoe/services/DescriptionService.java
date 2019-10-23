@@ -3,6 +3,7 @@ package com.edoe.edoe.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.edoe.edoe.models.Description;
@@ -24,6 +25,7 @@ public class DescriptionService {
 		return descriptionRepository.save(description);
 	}
 	
+	@Cacheable(cacheNames = "Descriptions", key="#descriptions.findAll")
 	public List<Description> findAll() {
 		return descriptionRepository.findAll();
 	}

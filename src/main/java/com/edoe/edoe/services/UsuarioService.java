@@ -57,7 +57,7 @@ public class UsuarioService {
 		usuarioRepository.delete(usuario);
 	}
 	
-	@Cacheable(cacheNames = "Usuarios", key="#root.method.name")
+	@Cacheable(cacheNames = "Usuarios", key="#usuarios.findAll")
 	public List<Usuario> findAll(){
 		return usuarioRepository.findAll();
 	}

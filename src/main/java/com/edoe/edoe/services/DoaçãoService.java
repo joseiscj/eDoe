@@ -3,6 +3,7 @@ package com.edoe.edoe.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.edoe.edoe.models.Doacao;
@@ -54,6 +55,7 @@ public class DoaçãoService {
 		}
 	}
 	
+	@Cacheable(cacheNames = "Doações", key="#doações.findAll")
 	public List<Doacao> findAll() {
 		return doacaoRepository.findAll();
 	}
