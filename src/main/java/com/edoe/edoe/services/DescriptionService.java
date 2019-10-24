@@ -25,7 +25,7 @@ public class DescriptionService {
 		return descriptionRepository.save(description);
 	}
 	
-	@Cacheable(cacheNames = "Descriptions", key="#descriptions.findAll")
+	@Cacheable(value="description-cache", key="#root.method.name")
 	public List<Description> findAll() {
 		return descriptionRepository.findAll();
 	}

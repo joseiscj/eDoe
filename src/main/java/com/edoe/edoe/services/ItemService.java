@@ -44,24 +44,22 @@ public class ItemService {
 	public List<Item> findAllDonation(){
 		return itemRepository.findAllByStatus(Status.DOACAO);
 	}
-	
-	@Cacheable(cacheNames = "Itens", key="#itens.findAll")
+	@Cacheable(value="item-cache", key="#root.method.name")
 	public List<Item> findAll(){
 		return itemRepository.findAll();
 	}
-	
-	@Cacheable(cacheNames = "Item", key="#identifier")
+	@Cacheable(value="item-cache", key= "'ItemCache'+#itemId")
 	public Item findById(long id) {
 		return itemRepository.findById(id);
 	}
 	
-	@CacheEvict(cacheNames = "deletedItem", key="#identifier")
+	@CacheEvict(cacheNames = "item-cache", key="#id")
 	public void delete(long id) {
 		itemRepository.deleteById(id);
 	}
 	
 	//Só deve ser possível atualizar 'tags' e 'quantidade' de um item
-	@CachePut(cacheNames = "newItem", key="#company.getIdentifier()")
+	@CachePut(cacheNames = "item-cache", key="#item-user")
 	public Item update(long id, ItemDTO itemDTO) {
 		Item item = itemRepository.findById(id);
 		System.out.println(item);

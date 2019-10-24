@@ -56,24 +56,22 @@ public class UsuarioService {
 		Usuario usuario = usuarioRepository.findByIdentificacao(identificacao);
 		usuarioRepository.delete(usuario);
 	}
-	
-	@Cacheable(cacheNames = "Usuarios", key="#usuarios.findAll")
+	@Cacheable(value="user-cache", key="#root.method.name")
 	public List<Usuario> findAll(){
 		return usuarioRepository.findAll();
 	}
-	
-	@Cacheable(cacheNames = "Usuario", key="#identifier")
+	@Cacheable(value="user-cache", key= "'UserCache'+#userId")
 	public Usuario findById(long id) {
 		return usuarioRepository.findById(id);
 	}
 	
-	@CacheEvict(cacheNames = "deletedUsuario", key="#identifier")
+	@CacheEvict(cacheNames = "user-cache", key="#id")
 	public void delete(UsuarioDTO usuarioDTO) {
 		Usuario usuario = usuarioDTO.getUsuario();
 		usuarioRepository.delete(usuario);
 	}
 	
-	@CachePut(cacheNames = "newUsuario", key="#company.getIdentifier()")
+	@CachePut(cacheNames = "user-cache", key="#id-user")
 	public Usuario update(UsuarioDTO usuarioDTO) {
 		Usuario usuario = usuarioDTO.getUsuario();
 		return usuarioRepository.save(usuario);

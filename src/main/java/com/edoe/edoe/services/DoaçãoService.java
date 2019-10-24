@@ -55,7 +55,7 @@ public class DoaçãoService {
 		}
 	}
 	
-	@Cacheable(cacheNames = "Doações", key="#doações.findAll")
+	@Cacheable(value="doacao-cache", key="#root.method.name")
 	public List<Doacao> findAll() {
 		return doacaoRepository.findAll();
 	}
