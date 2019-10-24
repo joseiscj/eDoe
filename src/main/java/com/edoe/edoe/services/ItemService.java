@@ -49,11 +49,10 @@ public class ItemService {
 		return itemRepository.findAll();
 	}
 	@Cacheable(value="item-cache", key= "'ItemCache'+#itemId")
-	public Item findById(long id) {
-		return itemRepository.findById(id);
+	public Item findById(long itemId) {
+		return itemRepository.findById(itemId);
 	}
 	
-	@CacheEvict(cacheNames = "item-cache", key="#id")
 	public void delete(long id) {
 		itemRepository.deleteById(id);
 	}

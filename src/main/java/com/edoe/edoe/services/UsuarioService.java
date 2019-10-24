@@ -61,17 +61,15 @@ public class UsuarioService {
 		return usuarioRepository.findAll();
 	}
 	@Cacheable(value="user-cache", key= "'UserCache'+#userId")
-	public Usuario findById(long id) {
-		return usuarioRepository.findById(id);
+	public Usuario findById(long userId) {
+		return usuarioRepository.findById(userId);
 	}
 	
-	@CacheEvict(cacheNames = "user-cache", key="#id")
 	public void delete(UsuarioDTO usuarioDTO) {
 		Usuario usuario = usuarioDTO.getUsuario();
 		usuarioRepository.delete(usuario);
 	}
 	
-	@CachePut(cacheNames = "user-cache", key="#id-user")
 	public Usuario update(UsuarioDTO usuarioDTO) {
 		Usuario usuario = usuarioDTO.getUsuario();
 		return usuarioRepository.save(usuario);
