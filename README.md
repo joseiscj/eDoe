@@ -16,7 +16,30 @@
    
    Utilizamos o *Spring JPA* para integrarmos os objetos Java em um banco de dados, possibilitando a persistência dos mesmos. A IDE utilizada foi o *Eclipse IDE*.
    
-   # Instalação
+  # Segurança
+  ## Estratégia de Autenticação:
+      A autenticação foi baseada em JWT, de forma que a cada requisição é preciso um token válido para se ter acesso. Todos     os endpoints estão bloqueados, somente os endpoints de login e criação de usuário estão abertos.
+
+  Toda a segurança do sistema foi feita usando-se Spring Security, para todas as requisições, foi criada um interceptador, onde verifica o token e o usuário que está usando a API. Todas as senhas antes de irem para o BD, são criptografadas, usando a biblioteca Bcrypt, e só depois de criptografada, a senha é salva no BD, pra isso foi usado uma classe Listener para o usuário, para que antes da criação do usuário ou edição da senha do usuário, a senha seja sempre criptografada, antes de chegar ao BD.
+  
+  ## Para a autenticação:
+ ```
+      1) acesse a rota base_url/usuario/login com um Json contendo o Password e o Username.
+      2) A credenciais estando corretas, acesse o Response headers, e copie o token, contido em "Authorization:".
+     3) Esse token será o responsável por todo acesso a API.
+        3.1 - O token terá validade durante 6 horas.
+     4) Adicione esse token ao Authorize da sua aplicação segundo o seguinte padrão:
+        Bearer <Token>
+```
+    
+ # Desempenho
+ ## Otimização via sistema de Cache
+ O sistema oferece sistema de cache, usando a ferramenta de cache do Spring, o spring-boot-starter-cache, para otimizar todas requisições a API.
+ 
+ ## Testes de desempenho:
+ Todos os testes foram feitos usados a ferramenta JMeter.
+
+  # Instalação
    Primeiro, é necessário **clonar** o [projeto do GitHub](https://github.com/joseiscj/eDoe.git), baixá-lo como **projeto Maven**, editá-lo em uma **IDE** de sua preferência (Eclipse STS, IntelliJ, etc) e, em seguida, selecionar o projeto e dar *run* para que o mesmo seja executado.
    
 # Autoria e contribuições
