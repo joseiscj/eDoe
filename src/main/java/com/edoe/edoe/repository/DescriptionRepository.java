@@ -1,11 +1,9 @@
 package com.edoe.edoe.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.edoe.edoe.models.Description;
 
-@Repository
-public interface DescriptionRepository extends JpaRepository<Description, Long> {
+public interface DescriptionRepository extends MongoRepository<Description, Long> {
 	Description findByDescription(String description);
 }

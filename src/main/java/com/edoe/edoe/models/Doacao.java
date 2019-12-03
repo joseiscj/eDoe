@@ -2,28 +2,21 @@ package com.edoe.edoe.models;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
 
-@Entity
+@Document(collection = "doacoes")
 public class Doacao implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private String id;
 	
-	@ManyToOne
 	private Usuario usuarioDoador;
 	
-	@ManyToOne
 	private Usuario usuarioReceptor;	
 	
-	@ManyToOne
 	private Description descricao;
 	
 	private int quantity;
@@ -47,11 +40,11 @@ public class Doacao implements Serializable{
 		this.quantity = quantity;
 	}
 	
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

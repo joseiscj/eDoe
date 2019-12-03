@@ -1,12 +1,10 @@
 package com.edoe.edoe.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.edoe.edoe.models.Usuario;
 
-@Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+public interface UsuarioRepository extends MongoRepository<Usuario, Long>{
 	Usuario findById(long id);
 	Usuario findByIdentificacao(String identification);
 	Usuario findByNome(String nome);

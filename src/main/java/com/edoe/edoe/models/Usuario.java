@@ -2,42 +2,29 @@ package com.edoe.edoe.models;
 
 import java.io.Serializable;
 import java.util.Collection;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Entity
-
+@Document(collection = "usuarios")
 public class Usuario implements Serializable, UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private String id;
 
-	@Column(nullable = false)
 	private String nome;
 
-	@Column(nullable = false)
 	private String email;
 
-	@Column(nullable = false)
 	private String celular;
 
-	@Column(nullable = false)
 	private Classe classe;
 
-	@Column(nullable = false, unique = true)
 	private String identificacao;
 
-	@Column(nullable = false)
 	private Tipo tipo;
 
 	private String username;
@@ -46,7 +33,7 @@ public class Usuario implements Serializable, UserDetails {
 
 	// CONSTRUCTOR
 
-	public Usuario(long id, String nome, String email, String celular, Classe classe, String identificacao, Tipo tipo, String username, String password) {
+	public Usuario(String id, String nome, String email, String celular, Classe classe, String identificacao, Tipo tipo, String username, String password) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
@@ -62,7 +49,7 @@ public class Usuario implements Serializable, UserDetails {
 
 	}
 
-	public Usuario(long id) {
+	public Usuario(String id) {
 		this.id = id;
 	}
 
@@ -92,11 +79,11 @@ public class Usuario implements Serializable, UserDetails {
 		this.identificacao = identificacao;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

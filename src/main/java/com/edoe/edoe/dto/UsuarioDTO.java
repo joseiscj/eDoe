@@ -6,7 +6,7 @@ import com.edoe.edoe.models.Usuario;
 
 public class UsuarioDTO {
 	
-	private long id;
+	private String id;
 	
 	private String nome;
 	
@@ -28,7 +28,7 @@ public class UsuarioDTO {
 		
 	}
 
-	public UsuarioDTO(long id, String nome, String email, String celular, Classe classe, String identificacao,
+	public UsuarioDTO(String id, String nome, String email, String celular, Classe classe, String identificacao,
 			Tipo tipo) {
 		this.id = id;
 		this.nome = nome;
@@ -47,11 +47,11 @@ public class UsuarioDTO {
 		this.identificacao = identificacao;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

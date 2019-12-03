@@ -20,7 +20,7 @@ public class ItemDTO {
 	
 	private Status status;
 	
-	public ItemDTO(long id, Description descricao, int quantidade, String tags, long usuarioId, Status status) {
+	public ItemDTO(long id, Description descricao, int quantidade, String tags, String usuarioId, Status status) {
 		this.id = id;
 		this.description = descricao;
 		this.tags = tags;
