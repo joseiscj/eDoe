@@ -6,7 +6,7 @@ import com.edoe.edoe.models.Status;
 import com.edoe.edoe.models.Usuario;
 
 public class ItemDTO {
-	private long id;
+	private String id;
 	
 	private Description description;
 	
@@ -16,11 +16,11 @@ public class ItemDTO {
 	
 	private Usuario user;
 	
-	private long userId;
+	private String userId;
 	
 	private Status status;
 	
-	public ItemDTO(long id, Description descricao, int quantidade, String tags, String usuarioId, Status status) {
+	public ItemDTO(String id, Description descricao, int quantidade, String tags, String usuarioId, Status status) {
 		this.id = id;
 		this.description = descricao;
 		this.tags = tags;
@@ -29,11 +29,11 @@ public class ItemDTO {
 		this.quantity = quantidade;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -69,11 +69,11 @@ public class ItemDTO {
 		this.user = user;
 	}
 
-	public long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

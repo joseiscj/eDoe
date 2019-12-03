@@ -50,7 +50,7 @@ public class ItemController {
 
 	//Exibir informações de um item já cadastrado através do seu identificador único;
 	@GetMapping("/{id}")
-	public ResponseEntity getById(@PathVariable("id") long id) {
+	public ResponseEntity getById(@PathVariable("id") String id) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(itemService.findById(id));
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class ItemController {
 	//receber o id do item a ser apagado
 	//Remover itens a serem doados/necessarios
 	@DeleteMapping("/{id}")
-	public ResponseEntity delete(@PathVariable(value="id") long id) {
+	public ResponseEntity delete(@PathVariable(value="id") String id) {
 		try {
 			itemService.delete(id);
 			return ResponseEntity.status(HttpStatus.OK).body("Item deletado");
@@ -83,7 +83,7 @@ public class ItemController {
 	
 	//Atualizar tags e quantidade de um item a ser doado/necessario
 	@PutMapping("/{id}")
-	public ResponseEntity update(@PathVariable(value="id") long id, @RequestBody ItemDTO item) {
+	public ResponseEntity update(@PathVariable(value="id") String id, @RequestBody ItemDTO item) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(itemService.update(id, item));
 		} catch (Exception e) {
@@ -92,7 +92,7 @@ public class ItemController {
 	}
 	
 	@GetMapping("/matches/{id}")
-	public ResponseEntity getMatches(@PathVariable(value="id") long id) {
+	public ResponseEntity getMatches(@PathVariable(value="id") String id) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(itemService.match(id));
 		} catch (Exception e) {

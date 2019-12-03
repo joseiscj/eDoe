@@ -48,7 +48,7 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity getUser(@PathVariable(value="id") long id) {
+	public ResponseEntity getUser(@PathVariable(value="id") String id) {
 		try {
 			return ResponseEntity.ok(usuarioService.findById(id));
 		} catch (Exception e) {

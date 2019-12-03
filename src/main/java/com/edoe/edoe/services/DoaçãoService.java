@@ -19,7 +19,7 @@ public class DoaçãoService {
 	@Autowired
 	ItemService itemService;
 	
-	public Doacao makeDonation(long necessaryID, long donatedID) {
+	public Doacao makeDonation(String necessaryID, String donatedID) {
 		Item necessaryItem = itemService.findById(necessaryID);
 		Item donatedItem = itemService.findById(donatedID);
 		

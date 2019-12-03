@@ -61,7 +61,7 @@ public class UsuarioService {
 		return usuarioRepository.findAll();
 	}
 	@Cacheable(value="user-cache", key= "'UserCache'+#userId")
-	public Usuario findById(long userId) {
+	public Usuario findById(String userId) {
 		return usuarioRepository.findById(userId);
 	}
 	

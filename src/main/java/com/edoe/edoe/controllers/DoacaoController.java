@@ -19,7 +19,7 @@ public class DoacaoController {
 	DoaçãoService doacaoService;
 	
 	@PostMapping("/{itemNecessarioId}/{itemDoacaoId}")
-	public ResponseEntity makeDonation(@PathVariable(value="itemNecessarioId") long idNec, @PathVariable(value="itemDoacaoId") long idDoa) {
+	public ResponseEntity makeDonation(@PathVariable(value="itemNecessarioId") String idNec, @PathVariable(value="itemDoacaoId") String idDoa) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(doacaoService.makeDonation(idNec, idDoa));
 		} catch (Exception e) {

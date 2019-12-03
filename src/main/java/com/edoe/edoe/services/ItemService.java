@@ -49,17 +49,17 @@ public class ItemService {
 		return itemRepository.findAll();
 	}
 	@Cacheable(value="item-cache", key= "'ItemCache'+#itemId")
-	public Item findById(long itemId) {
+	public Item findById(String itemId) {
 		return itemRepository.findById(itemId);
 	}
 	
-	public void delete(long id) {
-		itemRepository.deleteById(id);
+	public void delete(String id) {
+		itemRepository.deleteById(Long.parseLong(id));
 	}
 	
 	//Só deve ser possível atualizar 'tags' e 'quantidade' de um item
 	@CachePut(cacheNames = "item-cache", key="#item-user")
-	public Item update(long id, ItemDTO itemDTO) {
+	public Item update(String id, ItemDTO itemDTO) {
 		Item item = itemRepository.findById(id);
 		System.out.println(item);
 		if (itemDTO.getQuantity() > 0) {
@@ -86,7 +86,7 @@ public class ItemService {
 		return itemRepository.findAllByStatusOrderByIdAsc(Status.NECESSARIO);
 	}
 	
-	public List<Item> match(long id) {
+	public List<Item> match(String id) {
 		Item itemNecessario = itemRepository.findById(id);
 		List<Item> list = itemRepository.findAllByDescriptionAndStatus(itemNecessario.getDescription(), Status.DOACAO);
 		list.remove(itemNecessario);

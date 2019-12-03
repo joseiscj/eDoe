@@ -9,7 +9,7 @@ import com.edoe.edoe.models.Item;
 import com.edoe.edoe.models.Status;
 
 public interface ItemRepository extends MongoRepository<Item, Long>{
-	Item findById(long id);
+	Item findById(String id);
 	List<Item> findAllByStatus(Status status);
 	List<Item> findAllByDescriptionAndStatus(Description description, Status status);
 	List<Item> findAllByStatusOrderByQuantityDesc(Status status);
